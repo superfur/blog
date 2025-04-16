@@ -1,0 +1,807 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/blog/img/fluid.png">
+  <link rel="icon" href="/blog/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="SuperFur">
+  <meta name="keywords" content="React, JavaScript, 前端开发">
+  
+    <meta name="description" content="前端加密解密实战：CryptoJS 使用指南前言在当今的 Web 开发中，数据安全变得越来越重要。特别是在处理用户敏感信息（如密码、身份证号、银行卡号等）时，前端加密成为了必不可少的一环。本文将详细介绍如何使用 CryptoJS 这个强大的加密库来实现前端数据加密。 什么是 CryptoJS？CryptoJS 是一个强大的 JavaScript 加密库，提供了多种加密算法，包括：  AES（高级加">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端加密解密实战：CryptoJS使用指南">
+<meta property="og:url" content="https://superfur.github.io/blog/2025/04/16/cryptojs-tutorial/index.html">
+<meta property="og:site_name" content="SuperFur&#39;s Blog">
+<meta property="og:description" content="前端加密解密实战：CryptoJS 使用指南前言在当今的 Web 开发中，数据安全变得越来越重要。特别是在处理用户敏感信息（如密码、身份证号、银行卡号等）时，前端加密成为了必不可少的一环。本文将详细介绍如何使用 CryptoJS 这个强大的加密库来实现前端数据加密。 什么是 CryptoJS？CryptoJS 是一个强大的 JavaScript 加密库，提供了多种加密算法，包括：  AES（高级加">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-04-16T12:45:00.000Z">
+<meta property="article:modified_time" content="2025-04-16T12:57:20.271Z">
+<meta property="article:author" content="SuperFur">
+<meta property="article:tag" content="CryptoJS">
+<meta property="article:tag" content="加密">
+<meta property="article:tag" content="前端安全">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>前端加密解密实战：CryptoJS使用指南 - SuperFur&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/blog/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/blog/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/blog/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"superfur.github.io","root":"/blog/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/blog/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/blog/js/utils.js" ></script>
+  <script  src="/blog/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/blog/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/blog/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/blog/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/blog/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/blog/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/blog/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/blog/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="前端加密解密实战：CryptoJS使用指南"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-04-16 20:45" pubdate>
+          2025年4月16日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.4k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          12 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">前端加密解密实战：CryptoJS使用指南</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="前端加密解密实战：CryptoJS-使用指南"><a href="#前端加密解密实战：CryptoJS-使用指南" class="headerlink" title="前端加密解密实战：CryptoJS 使用指南"></a>前端加密解密实战：CryptoJS 使用指南</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在当今的 Web 开发中，数据安全变得越来越重要。特别是在处理用户敏感信息（如密码、身份证号、银行卡号等）时，前端加密成为了必不可少的一环。本文将详细介绍如何使用 CryptoJS 这个强大的加密库来实现前端数据加密。</p>
+<h2 id="什么是-CryptoJS？"><a href="#什么是-CryptoJS？" class="headerlink" title="什么是 CryptoJS？"></a>什么是 CryptoJS？</h2><p>CryptoJS 是一个强大的 JavaScript 加密库，提供了多种加密算法，包括：</p>
+<ul>
+<li>AES（高级加密标准）</li>
+<li>MD5（消息摘要算法）</li>
+<li>SHA（安全哈希算法）</li>
+<li>其他常用加密算法</li>
+</ul>
+<h2 id="基础安装"><a href="#基础安装" class="headerlink" title="基础安装"></a>基础安装</h2><p>使用 yarn 安装 CryptoJS：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">yarn add crypto-js<br></code></pre></td></tr></table></figure>
+
+<h2 id="基础使用"><a href="#基础使用" class="headerlink" title="基础使用"></a>基础使用</h2><h3 id="1-AES-加密解密"><a href="#1-AES-加密解密" class="headerlink" title="1. AES 加密解密"></a>1. AES 加密解密</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">import</span> <span class="hljs-title class_">CryptoJS</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;crypto-js&quot;</span>;<br><br><span class="hljs-comment">// 加密函数</span><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">encrypt</span>(<span class="hljs-params">data, key</span>) &#123;<br>  <span class="hljs-keyword">return</span> <span class="hljs-title class_">CryptoJS</span>.<span class="hljs-property">AES</span>.<span class="hljs-title function_">encrypt</span>(data, key).<span class="hljs-title function_">toString</span>();<br>&#125;<br><br><span class="hljs-comment">// 解密函数</span><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">decrypt</span>(<span class="hljs-params">encryptedData, key</span>) &#123;<br>  <span class="hljs-keyword">const</span> bytes = <span class="hljs-title class_">CryptoJS</span>.<span class="hljs-property">AES</span>.<span class="hljs-title function_">decrypt</span>(encryptedData, key);<br>  <span class="hljs-keyword">return</span> bytes.<span class="hljs-title function_">toString</span>(<span class="hljs-title class_">CryptoJS</span>.<span class="hljs-property">enc</span>.<span class="hljs-property">Utf8</span>);<br>&#125;<br><br><span class="hljs-comment">// 使用示例</span><br><span class="hljs-keyword">const</span> key = <span class="hljs-string">&quot;your-secret-key&quot;</span>;<br><span class="hljs-keyword">const</span> text = <span class="hljs-string">&quot;需要加密的内容&quot;</span>;<br><br><span class="hljs-keyword">const</span> encrypted = <span class="hljs-title function_">encrypt</span>(text, key);<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;加密结果：&quot;</span>, encrypted);<br><br><span class="hljs-keyword">const</span> decrypted = <span class="hljs-title function_">decrypt</span>(encrypted, key);<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;解密结果：&quot;</span>, decrypted);<br></code></pre></td></tr></table></figure>
+
+<h3 id="2-使用-CBC-模式"><a href="#2-使用-CBC-模式" class="headerlink" title="2. 使用 CBC 模式"></a>2. 使用 CBC 模式</h3><p>CBC（Cipher Block Chaining）模式比 ECB 模式更安全，因为它使用了初始化向量（IV）：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> encrypted = <span class="hljs-title class_">CryptoJS</span>.<span class="hljs-property">AES</span>.<span class="hljs-title function_">encrypt</span>(<span class="hljs-string">&quot;hello&quot;</span>, <span class="hljs-string">&quot;key&quot;</span>, &#123;<br>  <span class="hljs-attr">mode</span>: <span class="hljs-title class_">CryptoJS</span>.<span class="hljs-property">mode</span>.<span class="hljs-property">CBC</span>,<br>  <span class="hljs-attr">padding</span>: <span class="hljs-title class_">CryptoJS</span>.<span class="hljs-property">pad</span>.<span class="hljs-property">Pkcs7</span>,<br>  <span class="hljs-attr">iv</span>: <span class="hljs-title class_">CryptoJS</span>.<span class="hljs-property">enc</span>.<span class="hljs-property">Utf8</span>.<span class="hljs-title function_">parse</span>(<span class="hljs-string">&quot;1234567890123456&quot;</span>),<br>&#125;).<span class="hljs-title function_">toString</span>();<br><br><span class="hljs-keyword">const</span> decrypted = <span class="hljs-title class_">CryptoJS</span>.<span class="hljs-property">AES</span>.<span class="hljs-title function_">decrypt</span>(encrypted, <span class="hljs-string">&quot;key&quot;</span>, &#123;<br>  <span class="hljs-attr">mode</span>: <span class="hljs-title class_">CryptoJS</span>.<span class="hljs-property">mode</span>.<span class="hljs-property">CBC</span>,<br>  <span class="hljs-attr">padding</span>: <span class="hljs-title class_">CryptoJS</span>.<span class="hljs-property">pad</span>.<span class="hljs-property">Pkcs7</span>,<br>  <span class="hljs-attr">iv</span>: <span class="hljs-title class_">CryptoJS</span>.<span class="hljs-property">enc</span>.<span class="hljs-property">Utf8</span>.<span class="hljs-title function_">parse</span>(<span class="hljs-string">&quot;1234567890123456&quot;</span>),<br>&#125;).<span class="hljs-title function_">toString</span>(<span class="hljs-title class_">CryptoJS</span>.<span class="hljs-property">enc</span>.<span class="hljs-property">Utf8</span>);<br></code></pre></td></tr></table></figure>
+
+<h2 id="进阶功能"><a href="#进阶功能" class="headerlink" title="进阶功能"></a>进阶功能</h2><h3 id="1-MD5-哈希"><a href="#1-MD5-哈希" class="headerlink" title="1. MD5 哈希"></a>1. MD5 哈希</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> md5Hash = <span class="hljs-title class_">CryptoJS</span>.<span class="hljs-title class_">MD5</span>(<span class="hljs-string">&quot;需要哈希的内容&quot;</span>).<span class="hljs-title function_">toString</span>();<br></code></pre></td></tr></table></figure>
+
+<h3 id="2-SHA256-哈希"><a href="#2-SHA256-哈希" class="headerlink" title="2. SHA256 哈希"></a>2. SHA256 哈希</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> sha256Hash = <span class="hljs-title class_">CryptoJS</span>.<span class="hljs-title class_">SHA256</span>(<span class="hljs-string">&quot;需要哈希的内容&quot;</span>).<span class="hljs-title function_">toString</span>();<br></code></pre></td></tr></table></figure>
+
+<h3 id="3-Base64-编码"><a href="#3-Base64-编码" class="headerlink" title="3. Base64 编码"></a>3. Base64 编码</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> base64 = <span class="hljs-title class_">CryptoJS</span>.<span class="hljs-property">enc</span>.<span class="hljs-property">Base64</span>.<span class="hljs-title function_">stringify</span>(<span class="hljs-title class_">CryptoJS</span>.<span class="hljs-property">enc</span>.<span class="hljs-property">Utf8</span>.<span class="hljs-title function_">parse</span>(<span class="hljs-string">&quot;hello&quot;</span>));<br></code></pre></td></tr></table></figure>
+
+<h2 id="实际应用场景"><a href="#实际应用场景" class="headerlink" title="实际应用场景"></a>实际应用场景</h2><h3 id="1-密码加密"><a href="#1-密码加密" class="headerlink" title="1. 密码加密"></a>1. 密码加密</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// 从服务器获取公钥</span><br><span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">getPublicKey</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">const</span> response = <span class="hljs-keyword">await</span> <span class="hljs-title function_">fetch</span>(<span class="hljs-string">&quot;/api/getPublicKey&quot;</span>);<br>  <span class="hljs-keyword">const</span> &#123; publicKey &#125; = <span class="hljs-keyword">await</span> response.<span class="hljs-title function_">json</span>();<br>  <span class="hljs-keyword">return</span> publicKey;<br>&#125;<br><br><span class="hljs-comment">// 加密密码</span><br><span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">encryptPassword</span>(<span class="hljs-params">password</span>) &#123;<br>  <span class="hljs-keyword">const</span> publicKey = <span class="hljs-keyword">await</span> <span class="hljs-title function_">getPublicKey</span>();<br>  <span class="hljs-keyword">return</span> crypto<br>    .<span class="hljs-title function_">publicEncrypt</span>(publicKey, <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(password))<br>    .<span class="hljs-title function_">toString</span>(<span class="hljs-string">&quot;base64&quot;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="2-敏感信息加密"><a href="#2-敏感信息加密" class="headerlink" title="2. 敏感信息加密"></a>2. 敏感信息加密</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">class</span> <span class="hljs-title class_">SecurityService</span> &#123;<br>  <span class="hljs-keyword">async</span> <span class="hljs-title function_">encryptSensitiveData</span>(<span class="hljs-params">data</span>) &#123;<br>    <span class="hljs-comment">// 1. 生成随机的AES密钥</span><br>    <span class="hljs-keyword">const</span> aesKey = <span class="hljs-title class_">CryptoJS</span>.<span class="hljs-property">lib</span>.<span class="hljs-property">WordArray</span>.<span class="hljs-title function_">random</span>(<span class="hljs-number">16</span>).<span class="hljs-title function_">toString</span>();<br><br>    <span class="hljs-comment">// 2. 使用AES加密数据</span><br>    <span class="hljs-keyword">const</span> encryptedData = <span class="hljs-title class_">CryptoJS</span>.<span class="hljs-property">AES</span>.<span class="hljs-title function_">encrypt</span>(<span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">stringify</span>(data), aesKey, &#123;<br>      <span class="hljs-attr">mode</span>: <span class="hljs-title class_">CryptoJS</span>.<span class="hljs-property">mode</span>.<span class="hljs-property">CBC</span>,<br>      <span class="hljs-attr">padding</span>: <span class="hljs-title class_">CryptoJS</span>.<span class="hljs-property">pad</span>.<span class="hljs-property">Pkcs7</span>,<br>      <span class="hljs-attr">iv</span>: <span class="hljs-title class_">CryptoJS</span>.<span class="hljs-property">enc</span>.<span class="hljs-property">Utf8</span>.<span class="hljs-title function_">parse</span>(<span class="hljs-string">&quot;1234567890123456&quot;</span>),<br>    &#125;).<span class="hljs-title function_">toString</span>();<br><br>    <span class="hljs-comment">// 3. 使用RSA加密AES密钥</span><br>    <span class="hljs-keyword">const</span> publicKey = <span class="hljs-keyword">await</span> <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">getPublicKey</span>();<br>    <span class="hljs-keyword">const</span> encryptedKey = crypto<br>      .<span class="hljs-title function_">publicEncrypt</span>(publicKey, <span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(aesKey))<br>      .<span class="hljs-title function_">toString</span>(<span class="hljs-string">&quot;base64&quot;</span>);<br><br>    <span class="hljs-keyword">return</span> &#123;<br>      <span class="hljs-attr">data</span>: encryptedData,<br>      <span class="hljs-attr">key</span>: encryptedKey,<br>    &#125;;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="安全建议"><a href="#安全建议" class="headerlink" title="安全建议"></a>安全建议</h2><ol>
+<li>永远不要在前端代码中硬编码密钥</li>
+<li>使用 HTTPS 协议传输数据</li>
+<li>定期更换加密密钥</li>
+<li>使用强密码和随机生成的 IV</li>
+<li>考虑使用 Web Crypto API 作为替代方案</li>
+</ol>
+<h2 id="加密算法详解"><a href="#加密算法详解" class="headerlink" title="加密算法详解"></a>加密算法详解</h2><p>CryptoJS 支持多种加密算法，每种算法都有其特定的用途和特点。下面我们来详细介绍几种常用的加密算法：</p>
+<h3 id="1-AES（高级加密标准）"><a href="#1-AES（高级加密标准）" class="headerlink" title="1. AES（高级加密标准）"></a>1. AES（高级加密标准）</h3><p>AES 是目前最流行的对称加密算法之一，具有以下特点：</p>
+<ul>
+<li>密钥长度：128位、192位或256位</li>
+<li>分组长度：128位</li>
+<li>安全性高，性能好</li>
+<li>广泛应用于各种安全场景</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// AES-256加密示例</span><br><span class="hljs-keyword">const</span> encrypted = <span class="hljs-title class_">CryptoJS</span>.<span class="hljs-property">AES</span>.<span class="hljs-title function_">encrypt</span>(<span class="hljs-string">&quot;明文&quot;</span>, <span class="hljs-string">&quot;密钥&quot;</span>, &#123;<br>  <span class="hljs-attr">keySize</span>: <span class="hljs-number">256</span>/<span class="hljs-number">32</span>,  <span class="hljs-comment">// 密钥长度</span><br>  <span class="hljs-attr">mode</span>: <span class="hljs-title class_">CryptoJS</span>.<span class="hljs-property">mode</span>.<span class="hljs-property">CBC</span>,<br>  <span class="hljs-attr">padding</span>: <span class="hljs-title class_">CryptoJS</span>.<span class="hljs-property">pad</span>.<span class="hljs-property">Pkcs7</span>,<br>  <span class="hljs-attr">iv</span>: <span class="hljs-title class_">CryptoJS</span>.<span class="hljs-property">enc</span>.<span class="hljs-property">Utf8</span>.<span class="hljs-title function_">parse</span>(<span class="hljs-string">&quot;初始化向量&quot;</span>)<br>&#125;).<span class="hljs-title function_">toString</span>();<br></code></pre></td></tr></table></figure>
+
+<h3 id="2-DES（数据加密标准）"><a href="#2-DES（数据加密标准）" class="headerlink" title="2. DES（数据加密标准）"></a>2. DES（数据加密标准）</h3><p>DES 是一种较老的对称加密算法：</p>
+<ul>
+<li>密钥长度：56位</li>
+<li>分组长度：64位</li>
+<li>安全性较低，已逐渐被AES取代</li>
+<li>主要用于兼容旧系统</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// DES加密示例</span><br><span class="hljs-keyword">const</span> encrypted = <span class="hljs-title class_">CryptoJS</span>.<span class="hljs-property">DES</span>.<span class="hljs-title function_">encrypt</span>(<span class="hljs-string">&quot;明文&quot;</span>, <span class="hljs-string">&quot;密钥&quot;</span>, &#123;<br>  <span class="hljs-attr">mode</span>: <span class="hljs-title class_">CryptoJS</span>.<span class="hljs-property">mode</span>.<span class="hljs-property">ECB</span>,<br>  <span class="hljs-attr">padding</span>: <span class="hljs-title class_">CryptoJS</span>.<span class="hljs-property">pad</span>.<span class="hljs-property">Pkcs7</span><br>&#125;).<span class="hljs-title function_">toString</span>();<br></code></pre></td></tr></table></figure>
+
+<h3 id="3-Triple-DES（3DES）"><a href="#3-Triple-DES（3DES）" class="headerlink" title="3. Triple DES（3DES）"></a>3. Triple DES（3DES）</h3><p>3DES 是 DES 的增强版本：</p>
+<ul>
+<li>使用三个56位密钥</li>
+<li>安全性高于DES</li>
+<li>处理速度较慢</li>
+<li>主要用于金融领域</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// 3DES加密示例</span><br><span class="hljs-keyword">const</span> encrypted = <span class="hljs-title class_">CryptoJS</span>.<span class="hljs-property">TripleDES</span>.<span class="hljs-title function_">encrypt</span>(<span class="hljs-string">&quot;明文&quot;</span>, <span class="hljs-string">&quot;密钥&quot;</span>, &#123;<br>  <span class="hljs-attr">mode</span>: <span class="hljs-title class_">CryptoJS</span>.<span class="hljs-property">mode</span>.<span class="hljs-property">CBC</span>,<br>  <span class="hljs-attr">padding</span>: <span class="hljs-title class_">CryptoJS</span>.<span class="hljs-property">pad</span>.<span class="hljs-property">Pkcs7</span><br>&#125;).<span class="hljs-title function_">toString</span>();<br></code></pre></td></tr></table></figure>
+
+<h3 id="4-MD5（消息摘要算法）"><a href="#4-MD5（消息摘要算法）" class="headerlink" title="4. MD5（消息摘要算法）"></a>4. MD5（消息摘要算法）</h3><p>MD5 是一种哈希函数：</p>
+<ul>
+<li>输出长度：128位</li>
+<li>不可逆</li>
+<li>主要用于数据完整性校验</li>
+<li>不推荐用于密码存储</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// MD5哈希示例</span><br><span class="hljs-keyword">const</span> hash = <span class="hljs-title class_">CryptoJS</span>.<span class="hljs-title class_">MD5</span>(<span class="hljs-string">&quot;需要哈希的内容&quot;</span>).<span class="hljs-title function_">toString</span>();<br></code></pre></td></tr></table></figure>
+
+<h3 id="5-SHA系列（安全哈希算法）"><a href="#5-SHA系列（安全哈希算法）" class="headerlink" title="5. SHA系列（安全哈希算法）"></a>5. SHA系列（安全哈希算法）</h3><p>SHA 系列包括多种哈希算法：</p>
+<h4 id="SHA-1"><a href="#SHA-1" class="headerlink" title="SHA-1"></a>SHA-1</h4><ul>
+<li>输出长度：160位</li>
+<li>已不推荐用于安全场景</li>
+</ul>
+<h4 id="SHA-256"><a href="#SHA-256" class="headerlink" title="SHA-256"></a>SHA-256</h4><ul>
+<li>输出长度：256位</li>
+<li>安全性高</li>
+<li>广泛用于数字签名</li>
+</ul>
+<h4 id="SHA-512"><a href="#SHA-512" class="headerlink" title="SHA-512"></a>SHA-512</h4><ul>
+<li>输出长度：512位</li>
+<li>安全性最高</li>
+<li>计算资源消耗较大</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// SHA系列哈希示例</span><br><span class="hljs-keyword">const</span> sha1Hash = <span class="hljs-title class_">CryptoJS</span>.<span class="hljs-title class_">SHA1</span>(<span class="hljs-string">&quot;内容&quot;</span>).<span class="hljs-title function_">toString</span>();<br><span class="hljs-keyword">const</span> sha256Hash = <span class="hljs-title class_">CryptoJS</span>.<span class="hljs-title class_">SHA256</span>(<span class="hljs-string">&quot;内容&quot;</span>).<span class="hljs-title function_">toString</span>();<br><span class="hljs-keyword">const</span> sha512Hash = <span class="hljs-title class_">CryptoJS</span>.<span class="hljs-title class_">SHA512</span>(<span class="hljs-string">&quot;内容&quot;</span>).<span class="hljs-title function_">toString</span>();<br></code></pre></td></tr></table></figure>
+
+<h3 id="6-HMAC（基于哈希的消息认证码）"><a href="#6-HMAC（基于哈希的消息认证码）" class="headerlink" title="6. HMAC（基于哈希的消息认证码）"></a>6. HMAC（基于哈希的消息认证码）</h3><p>HMAC 用于消息认证：</p>
+<ul>
+<li>结合密钥和哈希函数</li>
+<li>防止消息被篡改</li>
+<li>常用于API签名</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// HMAC-SHA256示例</span><br><span class="hljs-keyword">const</span> hmac = <span class="hljs-title class_">CryptoJS</span>.<span class="hljs-title class_">HmacSHA256</span>(<span class="hljs-string">&quot;消息&quot;</span>, <span class="hljs-string">&quot;密钥&quot;</span>).<span class="hljs-title function_">toString</span>();<br></code></pre></td></tr></table></figure>
+
+<h3 id="7-PBKDF2（基于密码的密钥派生函数）"><a href="#7-PBKDF2（基于密码的密钥派生函数）" class="headerlink" title="7. PBKDF2（基于密码的密钥派生函数）"></a>7. PBKDF2（基于密码的密钥派生函数）</h3><p>PBKDF2 用于从密码派生密钥：</p>
+<ul>
+<li>使用盐值增加安全性</li>
+<li>可配置迭代次数</li>
+<li>常用于密码存储</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// PBKDF2示例</span><br><span class="hljs-keyword">const</span> salt = <span class="hljs-title class_">CryptoJS</span>.<span class="hljs-property">lib</span>.<span class="hljs-property">WordArray</span>.<span class="hljs-title function_">random</span>(<span class="hljs-number">128</span>/<span class="hljs-number">8</span>);<br><span class="hljs-keyword">const</span> key = <span class="hljs-title class_">CryptoJS</span>.<span class="hljs-title class_">PBKDF2</span>(<span class="hljs-string">&quot;密码&quot;</span>, salt, &#123;<br>  <span class="hljs-attr">keySize</span>: <span class="hljs-number">256</span>/<span class="hljs-number">32</span>,<br>  <span class="hljs-attr">iterations</span>: <span class="hljs-number">1000</span><br>&#125;).<span class="hljs-title function_">toString</span>();<br></code></pre></td></tr></table></figure>
+
+<h2 id="如何选择合适的加密算法"><a href="#如何选择合适的加密算法" class="headerlink" title="如何选择合适的加密算法"></a>如何选择合适的加密算法</h2><p>选择加密算法时需要考虑以下因素：</p>
+<ol>
+<li><p><strong>安全性需求</strong></p>
+<ul>
+<li>高安全性场景：AES-256、SHA-512</li>
+<li>一般安全性场景：AES-128、SHA-256</li>
+</ul>
+</li>
+<li><p><strong>性能要求</strong></p>
+<ul>
+<li>高性能需求：AES、MD5</li>
+<li>可接受较慢速度：3DES、SHA-512</li>
+</ul>
+</li>
+<li><p><strong>使用场景</strong></p>
+<ul>
+<li>数据传输：AES</li>
+<li>密码存储：PBKDF2</li>
+<li>数据完整性：SHA-256</li>
+<li>API认证：HMAC</li>
+</ul>
+</li>
+<li><p><strong>兼容性要求</strong></p>
+<ul>
+<li>现代系统：AES</li>
+<li>旧系统：3DES</li>
+</ul>
+</li>
+</ol>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>CryptoJS 是一个功能强大且易于使用的前端加密库。通过合理使用其提供的各种加密算法，我们可以有效保护用户数据的安全。在实际项目中，建议根据具体需求选择合适的加密方式，并遵循最佳安全实践。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/blog/categories/%E5%89%8D%E7%AB%AF%E5%AE%89%E5%85%A8/" class="category-chain-item">前端安全</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/blog/tags/CryptoJS/" class="print-no-link">#CryptoJS</a>
+      
+        <a href="/blog/tags/%E5%8A%A0%E5%AF%86/" class="print-no-link">#加密</a>
+      
+        <a href="/blog/tags/%E5%89%8D%E7%AB%AF%E5%AE%89%E5%85%A8/" class="print-no-link">#前端安全</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>前端加密解密实战：CryptoJS使用指南</div>
+      <div>https://superfur.github.io/blog/2025/04/16/cryptojs-tutorial/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>SuperFur</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年4月16日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/blog/2025/04/09/MCP-%E6%A8%A1%E5%9E%8B%E4%B8%8A%E4%B8%8B%E6%96%87%E5%8D%8F%E8%AE%AE%E8%AF%A6%E8%A7%A3/" title="MCP 模型上下文协议详解：AI 应用的新标准接口">
+                        <span class="hidden-mobile">MCP 模型上下文协议详解：AI 应用的新标准接口</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="gitalk-container"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#gitalk-container', function() {
+      Fluid.utils.createCssLink('/blog/css/gitalk.css')
+      Fluid.utils.createScript('https://lib.baomitu.com/gitalk/1.8.0/gitalk.min.js', function() {
+        var options = Object.assign(
+          {"clientID":"Ov23li0dCHO8EblYKx11","clientSecret":"8c76fd8963256db2eceffa586f5be22d555bbf51","repo":"blog","owner":"superfur","admin":["superfur"],"language":"zh-CN","labels":["Gitalk"],"perPage":10,"pagerDirection":"last","distractionFreeMode":false,"createIssueManually":false,"proxy":"https://cors-anywhere.herokuapp.com/https://github.com/login/oauth/access_token","id":"location.pathname"},
+          {
+            id: '09945d1c92596dc32945bf39b3ba2f03'
+          }
+        )
+        var gitalk = new Gitalk(options);
+        gitalk.render('gitalk-container');
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/blog/js/events.js" ></script>
+<script  src="/blog/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/blog/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/blog/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/blog/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
