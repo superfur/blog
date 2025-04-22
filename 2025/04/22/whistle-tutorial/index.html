@@ -1,0 +1,808 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/blog/img/fluid.png">
+  <link rel="icon" href="/blog/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="SuperFur">
+  <meta name="keywords" content="React, JavaScript, 前端开发">
+  
+    <meta name="description" content="Whistle 跨平台 Web 调试代理工具使用教程什么是 Whistle？Whistle（读音[ˈwɪsəl]，拼音[wēisǒu]）是一个基于 Node.js 实现的跨平台 Web 调试代理工具。它类似于 Windows 平台上的 Fiddler，主要用于查看、修改 HTTP、HTTPS、WebSocket 的请求和响应，也可以作为 HTTP 代理服务器使用。 安装与配置1. 安装 Whist">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Whistle 跨平台 Web 调试代理工具使用教程">
+<meta property="og:url" content="https://superfur.github.io/blog/2025/04/22/whistle-tutorial/index.html">
+<meta property="og:site_name" content="SuperFur&#39;s Blog">
+<meta property="og:description" content="Whistle 跨平台 Web 调试代理工具使用教程什么是 Whistle？Whistle（读音[ˈwɪsəl]，拼音[wēisǒu]）是一个基于 Node.js 实现的跨平台 Web 调试代理工具。它类似于 Windows 平台上的 Fiddler，主要用于查看、修改 HTTP、HTTPS、WebSocket 的请求和响应，也可以作为 HTTP 代理服务器使用。 安装与配置1. 安装 Whist">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-04-22T14:41:00.000Z">
+<meta property="article:modified_time" content="2025-04-22T14:44:32.849Z">
+<meta property="article:author" content="SuperFur">
+<meta property="article:tag" content="开发工具">
+<meta property="article:tag" content="调试">
+<meta property="article:tag" content="代理">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>Whistle 跨平台 Web 调试代理工具使用教程 - SuperFur&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/blog/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/blog/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/blog/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"superfur.github.io","root":"/blog/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/blog/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/blog/js/utils.js" ></script>
+  <script  src="/blog/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/blog/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/blog/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/blog/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/blog/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/blog/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/blog/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/blog/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Whistle 跨平台 Web 调试代理工具使用教程"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-04-22 22:41" pubdate>
+          2025年4月22日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.9k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          16 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Whistle 跨平台 Web 调试代理工具使用教程</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="Whistle-跨平台-Web-调试代理工具使用教程"><a href="#Whistle-跨平台-Web-调试代理工具使用教程" class="headerlink" title="Whistle 跨平台 Web 调试代理工具使用教程"></a>Whistle 跨平台 Web 调试代理工具使用教程</h1><h2 id="什么是-Whistle？"><a href="#什么是-Whistle？" class="headerlink" title="什么是 Whistle？"></a>什么是 Whistle？</h2><p>Whistle（读音[ˈwɪsəl]，拼音[wēisǒu]）是一个基于 Node.js 实现的跨平台 Web 调试代理工具。它类似于 Windows 平台上的 Fiddler，主要用于查看、修改 HTTP、HTTPS、WebSocket 的请求和响应，也可以作为 HTTP 代理服务器使用。</p>
+<h2 id="安装与配置"><a href="#安装与配置" class="headerlink" title="安装与配置"></a>安装与配置</h2><h3 id="1-安装-Whistle"><a href="#1-安装-Whistle" class="headerlink" title="1. 安装 Whistle"></a>1. 安装 Whistle</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 使用 yarn 安装</span><br>yarn global add whistle<br><br><span class="hljs-comment"># 或者使用 npm 安装</span><br>npm install -g whistle<br><br><span class="hljs-comment"># 使用淘宝镜像安装</span><br>npm install whistle -g --registry=https://registry.npm.taobao.org<br></code></pre></td></tr></table></figure>
+
+<h3 id="2-启动-Whistle"><a href="#2-启动-Whistle" class="headerlink" title="2. 启动 Whistle"></a>2. 启动 Whistle</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 启动 whistle</span><br>w2 start<br><br><span class="hljs-comment"># 查看帮助信息</span><br>w2 <span class="hljs-built_in">help</span><br><br><span class="hljs-comment"># 停止 whistle</span><br>w2 stop<br><br><span class="hljs-comment"># 重启 whistle</span><br>w2 restart<br></code></pre></td></tr></table></figure>
+
+<h3 id="3-配置浏览器代理"><a href="#3-配置浏览器代理" class="headerlink" title="3. 配置浏览器代理"></a>3. 配置浏览器代理</h3><ol>
+<li>安装 Chrome 代理插件（推荐使用 SwitchyOmega）</li>
+<li>配置代理地址为：<code>127.0.0.1:8899</code></li>
+<li>访问 Whistle 控制台：<code>http://127.0.0.1:8899/</code></li>
+</ol>
+<h3 id="4-安装-HTTPS-证书"><a href="#4-安装-HTTPS-证书" class="headerlink" title="4. 安装 HTTPS 证书"></a>4. 安装 HTTPS 证书</h3><p>为了能够捕获 HTTPS 请求，需要安装 Whistle 的根证书：</p>
+<ol>
+<li>访问 <code>http://127.0.0.1:8899/</code> 下载根证书</li>
+<li>Windows：双击证书，安装到”受信任的根证书颁发机构”</li>
+<li>iOS：访问 <code>rootca.pro</code> 安装证书，并在设置中信任证书</li>
+<li>Android：访问 <code>rootca.pro</code> 安装证书，并将 WiFi 设为可信任网络</li>
+</ol>
+<h2 id="常用功能"><a href="#常用功能" class="headerlink" title="常用功能"></a>常用功能</h2><h3 id="1-请求过滤"><a href="#1-请求过滤" class="headerlink" title="1. 请求过滤"></a>1. 请求过滤</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 隐藏某些域名的请求</span><br>/xxx.cn|abc/ filter://hide<br></code></pre></td></tr></table></figure>
+
+<h3 id="2-修改请求头"><a href="#2-修改请求头" class="headerlink" title="2. 修改请求头"></a>2. 修改请求头</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 修改 User-Agent</span><br>http://m.aliexpress.com ua://&#123;&#123;wp_ua&#125;&#125;<br><br><span class="hljs-comment"># 修改请求头</span><br>http://m.aliexpress.com reqHeaders://&#123;&#123;req-headers&#125;&#125;<br><br><span class="hljs-comment"># 修改响应头</span><br>/https?:\/\/(cdn)\.cn/ resHeaders://&#123;resHeaders.json&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="3-修改请求-响应内容"><a href="#3-修改请求-响应内容" class="headerlink" title="3. 修改请求&#x2F;响应内容"></a>3. 修改请求&#x2F;响应内容</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 修改请求体</span><br>http://localhost:8000/api/posts reqBody://&#123;posts.json&#125;<br><br><span class="hljs-comment"># 修改响应体</span><br>http://localhost:8000/api/posts resBody://&#123;posts.json&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="4-移动端调试"><a href="#4-移动端调试" class="headerlink" title="4. 移动端调试"></a>4. 移动端调试</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 使用 Weinre 调试移动端页面</span><br>http://www.qq.com/ weinre://test<br></code></pre></td></tr></table></figure>
+
+<h3 id="5-代理到本地"><a href="#5-代理到本地" class="headerlink" title="5. 代理到本地"></a>5. 代理到本地</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 线上代理到本地调试</span><br>//xxx.cn//0002/ localhost:3334//0002/<br><br><span class="hljs-comment"># 代理到本地文件</span><br>https://xx.cn/lowcode/editer.js file:///path/to/local/file.js<br></code></pre></td></tr></table></figure>
+
+<h3 id="6-延迟响应"><a href="#6-延迟响应" class="headerlink" title="6. 延迟响应"></a>6. 延迟响应</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 设置延迟响应时间（毫秒）</span><br>https://xxx.cn/api/xxxcms/selectById resDelay://3000<br></code></pre></td></tr></table></figure>
+
+<h3 id="7-模拟错误"><a href="#7-模拟错误" class="headerlink" title="7. 模拟错误"></a>7. 模拟错误</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 修改返回码</span><br>https://xxx.cn/api/xxxcms/selectById statusCode://500<br></code></pre></td></tr></table></figure>
+
+<h3 id="8-注入脚本和样式"><a href="#8-注入脚本和样式" class="headerlink" title="8. 注入脚本和样式"></a>8. 注入脚本和样式</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 注入 JavaScript</span><br>https://wq.jd.com/ jsAppend://&#123;test.js&#125;<br><br><span class="hljs-comment"># 注入 CSS</span><br>https://wq.jd.com/ cssAppend://&#123;test.css&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="移动端配置"><a href="#移动端配置" class="headerlink" title="移动端配置"></a>移动端配置</h2><h3 id="iOS-设备"><a href="#iOS-设备" class="headerlink" title="iOS 设备"></a>iOS 设备</h3><ol>
+<li>连接 PC 机的热点</li>
+<li>配置代理：设置 &gt; WiFi &gt; 当前网络 &gt; 配置代理 &gt; 手动</li>
+<li>输入 PC 机 IP 和端口 8899</li>
+<li>访问 <code>rootca.pro</code> 安装证书</li>
+<li>在设置中信任证书：设置 &gt; 通用 &gt; 关于本机 &gt; 证书信任设置</li>
+</ol>
+<h3 id="Android-设备"><a href="#Android-设备" class="headerlink" title="Android 设备"></a>Android 设备</h3><ol>
+<li>连接 PC 机的热点</li>
+<li>配置代理：设置 &gt; WiFi &gt; 当前网络 &gt; 修改网络 &gt; 高级选项 &gt; 代理</li>
+<li>输入 PC 机 IP 和端口 8899</li>
+<li>访问 <code>rootca.pro</code> 安装证书</li>
+<li>将 WiFi 设为可信任网络</li>
+</ol>
+<h2 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h2><ol>
+<li><p><strong>证书信任问题</strong></p>
+<ul>
+<li>iOS 设备需要手动开启证书信任</li>
+<li>部分 iOS 版本可能无法设置证书信任</li>
+<li>建议使用较新的 iOS 版本</li>
+</ul>
+</li>
+<li><p><strong>代理连接问题</strong></p>
+<ul>
+<li>检查防火墙设置</li>
+<li>确保 PC 机和移动设备在同一网络</li>
+<li>验证 IP 地址和端口配置</li>
+</ul>
+</li>
+<li><p><strong>HTTPS 请求无法捕获</strong></p>
+<ul>
+<li>确认证书安装正确</li>
+<li>检查证书是否被信任</li>
+<li>验证 HTTPS 拦截功能是否开启</li>
+</ul>
+</li>
+</ol>
+<h2 id="实用技巧"><a href="#实用技巧" class="headerlink" title="实用技巧"></a>实用技巧</h2><ol>
+<li><p><strong>微信公众号调试</strong></p>
+<ul>
+<li>配置微信开发者工具代理</li>
+<li>设置 &gt; 代理设置 &gt; 设置本机 IP 和端口 8899</li>
+</ul>
+</li>
+<li><p><strong>线上调试</strong></p>
+<ul>
+<li>使用 source-map 映射源码</li>
+<li>配置域名和端口</li>
+<li>代理错误 js 文件并添加 sourceMappingURL</li>
+</ul>
+</li>
+<li><p><strong>性能优化</strong></p>
+<ul>
+<li>使用 filter 规则减少不必要的请求显示</li>
+<li>合理使用延迟响应模拟网络状况</li>
+<li>利用日志分组功能进行调试</li>
+</ul>
+</li>
+</ol>
+<h2 id="特殊用法"><a href="#特殊用法" class="headerlink" title="特殊用法"></a>特殊用法</h2><h3 id="1-请求重定向"><a href="#1-请求重定向" class="headerlink" title="1. 请求重定向"></a>1. 请求重定向</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 将请求重定向到其他域名</span><br>http://example.com http://test.com<br><br><span class="hljs-comment"># 将请求重定向到本地文件</span><br>http://example.com file:///path/to/local/file.html<br><br><span class="hljs-comment"># 将请求重定向到本地目录</span><br>http://example.com <span class="hljs-built_in">dir</span>:///path/to/local/dir<br></code></pre></td></tr></table></figure>
+
+<h3 id="2-请求合并"><a href="#2-请求合并" class="headerlink" title="2. 请求合并"></a>2. 请求合并</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 合并多个请求到一个请求</span><br>http://example.com/req1 http://example.com/req2 merge://&#123;merge.json&#125;<br><br><span class="hljs-comment"># merge.json 内容示例</span><br>&#123;<br>  <span class="hljs-string">&quot;req1&quot;</span>: &#123;<br>    <span class="hljs-string">&quot;url&quot;</span>: <span class="hljs-string">&quot;http://example.com/req1&quot;</span>,<br>    <span class="hljs-string">&quot;method&quot;</span>: <span class="hljs-string">&quot;GET&quot;</span><br>  &#125;,<br>  <span class="hljs-string">&quot;req2&quot;</span>: &#123;<br>    <span class="hljs-string">&quot;url&quot;</span>: <span class="hljs-string">&quot;http://example.com/req2&quot;</span>,<br>    <span class="hljs-string">&quot;method&quot;</span>: <span class="hljs-string">&quot;GET&quot;</span><br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="3-请求替换"><a href="#3-请求替换" class="headerlink" title="3. 请求替换"></a>3. 请求替换</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 替换请求内容</span><br>http://example.com replace://&#123;replace.json&#125;<br><br><span class="hljs-comment"># replace.json 内容示例</span><br>&#123;<br>  <span class="hljs-string">&quot;search&quot;</span>: <span class="hljs-string">&quot;old content&quot;</span>,<br>  <span class="hljs-string">&quot;replace&quot;</span>: <span class="hljs-string">&quot;new content&quot;</span>,<br>  <span class="hljs-string">&quot;type&quot;</span>: <span class="hljs-string">&quot;text/html&quot;</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="4-请求缓存"><a href="#4-请求缓存" class="headerlink" title="4. 请求缓存"></a>4. 请求缓存</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 缓存请求响应</span><br>http://example.com cache://&#123;cache.json&#125;<br><br><span class="hljs-comment"># cache.json 内容示例</span><br>&#123;<br>  <span class="hljs-string">&quot;maxAge&quot;</span>: 3600,  // 缓存时间（秒）<br>  <span class="hljs-string">&quot;statusCode&quot;</span>: 200<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="5-请求限速"><a href="#5-请求限速" class="headerlink" title="5. 请求限速"></a>5. 请求限速</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 限制请求速度</span><br>http://example.com speed://100  // 100KB/s<br></code></pre></td></tr></table></figure>
+
+<h3 id="6-请求重试"><a href="#6-请求重试" class="headerlink" title="6. 请求重试"></a>6. 请求重试</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 请求失败时自动重试</span><br>http://example.com retry://3  // 重试3次<br></code></pre></td></tr></table></figure>
+
+<h3 id="7-请求超时设置"><a href="#7-请求超时设置" class="headerlink" title="7. 请求超时设置"></a>7. 请求超时设置</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 设置请求超时时间</span><br>http://example.com <span class="hljs-built_in">timeout</span>://5000  // 5秒超时<br></code></pre></td></tr></table></figure>
+
+<h3 id="8-请求日志"><a href="#8-请求日志" class="headerlink" title="8. 请求日志"></a>8. 请求日志</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 记录请求日志</span><br>http://example.com <span class="hljs-built_in">log</span>://&#123;log.json&#125;<br><br><span class="hljs-comment"># log.json 内容示例</span><br>&#123;<br>  <span class="hljs-string">&quot;format&quot;</span>: <span class="hljs-string">&quot;json&quot;</span>,<br>  <span class="hljs-string">&quot;path&quot;</span>: <span class="hljs-string">&quot;/path/to/log/file&quot;</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="9-请求统计"><a href="#9-请求统计" class="headerlink" title="9. 请求统计"></a>9. 请求统计</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 统计请求信息</span><br>http://example.com stats://&#123;stats.json&#125;<br><br><span class="hljs-comment"># stats.json 内容示例</span><br>&#123;<br>  <span class="hljs-string">&quot;format&quot;</span>: <span class="hljs-string">&quot;json&quot;</span>,<br>  <span class="hljs-string">&quot;path&quot;</span>: <span class="hljs-string">&quot;/path/to/stats/file&quot;</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="10-请求模拟"><a href="#10-请求模拟" class="headerlink" title="10. 请求模拟"></a>10. 请求模拟</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 模拟请求响应</span><br>http://example.com mock://&#123;mock.json&#125;<br><br><span class="hljs-comment"># mock.json 内容示例</span><br>&#123;<br>  <span class="hljs-string">&quot;statusCode&quot;</span>: 200,<br>  <span class="hljs-string">&quot;headers&quot;</span>: &#123;<br>    <span class="hljs-string">&quot;Content-Type&quot;</span>: <span class="hljs-string">&quot;application/json&quot;</span><br>  &#125;,<br>  <span class="hljs-string">&quot;body&quot;</span>: &#123;<br>    <span class="hljs-string">&quot;data&quot;</span>: <span class="hljs-string">&quot;mock data&quot;</span><br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="11-请求转发"><a href="#11-请求转发" class="headerlink" title="11. 请求转发"></a>11. 请求转发</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 将请求转发到其他代理</span><br>http://example.com proxy://127.0.0.1:8080<br><br><span class="hljs-comment"># 使用多个代理</span><br>http://example.com proxy://127.0.0.1:8080,127.0.0.1:8081<br></code></pre></td></tr></table></figure>
+
+<h3 id="12-请求过滤"><a href="#12-请求过滤" class="headerlink" title="12. 请求过滤"></a>12. 请求过滤</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 根据请求方法过滤</span><br>http://example.com method://GET<br><br><span class="hljs-comment"># 根据请求头过滤</span><br>http://example.com header://&#123;header.json&#125;<br><br><span class="hljs-comment"># header.json 内容示例</span><br>&#123;<br>  <span class="hljs-string">&quot;User-Agent&quot;</span>: <span class="hljs-string">&quot;Chrome&quot;</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="13-请求修改"><a href="#13-请求修改" class="headerlink" title="13. 请求修改"></a>13. 请求修改</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 修改请求方法</span><br>http://example.com method://POST<br><br><span class="hljs-comment"># 修改请求路径</span><br>http://example.com path:///new/path<br><br><span class="hljs-comment"># 修改请求查询参数</span><br>http://example.com query://&#123;query.json&#125;<br><br><span class="hljs-comment"># query.json 内容示例</span><br>&#123;<br>  <span class="hljs-string">&quot;param1&quot;</span>: <span class="hljs-string">&quot;value1&quot;</span>,<br>  <span class="hljs-string">&quot;param2&quot;</span>: <span class="hljs-string">&quot;value2&quot;</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="14-响应修改"><a href="#14-响应修改" class="headerlink" title="14. 响应修改"></a>14. 响应修改</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 修改响应状态码</span><br>http://example.com statusCode://404<br><br><span class="hljs-comment"># 修改响应头</span><br>http://example.com resHeaders://&#123;headers.json&#125;<br><br><span class="hljs-comment"># 修改响应内容</span><br>http://example.com resBody://&#123;body.json&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="15-请求拦截"><a href="#15-请求拦截" class="headerlink" title="15. 请求拦截"></a>15. 请求拦截</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 拦截请求并修改</span><br>http://example.com reqInterceptor://&#123;interceptor.js&#125;<br><br><span class="hljs-comment"># interceptor.js 内容示例</span><br>module.exports = <span class="hljs-keyword">function</span>(req, res, next) &#123;<br>  req.headers[<span class="hljs-string">&#x27;X-Custom-Header&#x27;</span>] = <span class="hljs-string">&#x27;value&#x27;</span>;<br>  next();<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<h3 id="16-响应拦截"><a href="#16-响应拦截" class="headerlink" title="16. 响应拦截"></a>16. 响应拦截</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 拦截响应并修改</span><br>http://example.com resInterceptor://&#123;interceptor.js&#125;<br><br><span class="hljs-comment"># interceptor.js 内容示例</span><br>module.exports = <span class="hljs-keyword">function</span>(req, res, next) &#123;<br>  res.headers[<span class="hljs-string">&#x27;X-Custom-Header&#x27;</span>] = <span class="hljs-string">&#x27;value&#x27;</span>;<br>  next();<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<h3 id="17-请求重放"><a href="#17-请求重放" class="headerlink" title="17. 请求重放"></a>17. 请求重放</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 重放请求</span><br>http://example.com replay://&#123;replay.json&#125;<br><br><span class="hljs-comment"># replay.json 内容示例</span><br>&#123;<br>  <span class="hljs-string">&quot;times&quot;</span>: 3,  // 重放次数<br>  <span class="hljs-string">&quot;interval&quot;</span>: 1000  // 间隔时间（毫秒）<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="18-请求录制"><a href="#18-请求录制" class="headerlink" title="18. 请求录制"></a>18. 请求录制</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 录制请求</span><br>http://example.com record://&#123;record.json&#125;<br><br><span class="hljs-comment"># record.json 内容示例</span><br>&#123;<br>  <span class="hljs-string">&quot;format&quot;</span>: <span class="hljs-string">&quot;json&quot;</span>,<br>  <span class="hljs-string">&quot;path&quot;</span>: <span class="hljs-string">&quot;/path/to/record/file&quot;</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="19-请求回放"><a href="#19-请求回放" class="headerlink" title="19. 请求回放"></a>19. 请求回放</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 回放录制的请求</span><br>http://example.com playback://&#123;playback.json&#125;<br><br><span class="hljs-comment"># playback.json 内容示例</span><br>&#123;<br>  <span class="hljs-string">&quot;format&quot;</span>: <span class="hljs-string">&quot;json&quot;</span>,<br>  <span class="hljs-string">&quot;path&quot;</span>: <span class="hljs-string">&quot;/path/to/record/file&quot;</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="20-请求分析"><a href="#20-请求分析" class="headerlink" title="20. 请求分析"></a>20. 请求分析</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 分析请求性能</span><br>http://example.com analyze://&#123;analyze.json&#125;<br><br><span class="hljs-comment"># analyze.json 内容示例</span><br>&#123;<br>  <span class="hljs-string">&quot;format&quot;</span>: <span class="hljs-string">&quot;json&quot;</span>,<br>  <span class="hljs-string">&quot;path&quot;</span>: <span class="hljs-string">&quot;/path/to/analyze/file&quot;</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>这些特殊用法可以帮助开发者更灵活地使用 Whistle 进行调试和开发。根据实际需求，可以组合使用这些功能来实现更复杂的调试场景。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>Whistle 是一个功能强大的 Web 调试代理工具，特别适合移动端开发和调试。通过合理配置和使用，可以大大提高开发效率，解决各种调试难题。建议开发者熟练掌握其基本功能和常用技巧，以便更好地服务于开发工作。 </p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/blog/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" class="category-chain-item">开发工具</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/blog/tags/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" class="print-no-link">#开发工具</a>
+      
+        <a href="/blog/tags/%E8%B0%83%E8%AF%95/" class="print-no-link">#调试</a>
+      
+        <a href="/blog/tags/%E4%BB%A3%E7%90%86/" class="print-no-link">#代理</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Whistle 跨平台 Web 调试代理工具使用教程</div>
+      <div>https://superfur.github.io/blog/2025/04/22/whistle-tutorial/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>SuperFur</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年4月22日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/blog/2025/04/16/cryptojs-tutorial/" title="前端加密解密实战：CryptoJS使用指南">
+                        <span class="hidden-mobile">前端加密解密实战：CryptoJS使用指南</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="gitalk-container"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#gitalk-container', function() {
+      Fluid.utils.createCssLink('/blog/css/gitalk.css')
+      Fluid.utils.createScript('https://lib.baomitu.com/gitalk/1.8.0/gitalk.min.js', function() {
+        var options = Object.assign(
+          {"clientID":"Ov23li0dCHO8EblYKx11","clientSecret":"8c76fd8963256db2eceffa586f5be22d555bbf51","repo":"blog","owner":"superfur","admin":["superfur"],"language":"zh-CN","labels":["Gitalk"],"perPage":10,"pagerDirection":"last","distractionFreeMode":false,"createIssueManually":false,"proxy":"https://cors-anywhere.herokuapp.com/https://github.com/login/oauth/access_token","id":"location.pathname"},
+          {
+            id: '7e11e35a50cde10c3d5eb15ebdb1331b'
+          }
+        )
+        var gitalk = new Gitalk(options);
+        gitalk.render('gitalk-container');
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/blog/js/events.js" ></script>
+<script  src="/blog/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/blog/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/blog/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/blog/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
